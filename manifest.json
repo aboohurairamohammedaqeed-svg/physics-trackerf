@@ -6,7 +6,6 @@
   "display": "standalone",
   "background_color": "#667eea",
   "theme_color": "#667eea",
-  
   "icons": [
   {
       "src": "https://www.pwabuilder.com/assets/icons/icon_192.png",
@@ -20,15 +19,14 @@
       "type": "image/png",
       "purpose": "maskable"
   }
-]
+],
   "screenshots" : [
   {
     "src": "screenshot.jpg",
     "sizes": "1280x720",
     "type": "image/jpg",
-    "platform": "wide",
+    "platform": "wide"
   }
 ]
 
 }
-
