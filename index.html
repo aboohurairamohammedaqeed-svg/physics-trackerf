@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics Past Paper Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+	<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#667eea">
+<link rel="icon" type="image/png" href="icon-192.png">
+</head>
+<body>
+    <!-- Welcome Screen -->
+    <div id="welcome-screen" class="welcome-screen">
+        <div class="welcome-card">
+            <h1 class="welcome-title">🎓 Welcome to Your Physics Journey!</h1>
+            <p class="welcome-subtitle">Let's track your past paper progress together</p>
+            <p style="font-size: 0.75rem; color: #6b7280; margin-top: 1rem;">
+                By using this app, you agree to share your study progress data for improvement purposes. 
+                Your data is stored securely and will not be shared with third parties.
+            </p>
+            
+            <div id="welcome-form">
+                <div id="step-1">
+    <div class="input-group">
+        <label class="input-label">What's your name?</label>
+        <input type="text" id="input-name" class="input-field" placeholder="Enter your name">
+    </div>
+    <button class="btn-primary" onclick="nextStep(2)">Next →</button>
+</div>
+               
+
+                <div id="step-2" class="hidden">
+                    <div class="input-group">
+                    <label class="input-label">Which batch are you from?</label>
+                    <select id="input-batch" class="input-field">
+                        <option value="">Select your batch</option>
+                        <option value="2025">2025</option>
+                        <option value="2026">2026</option>
+                        <option value="2027">2027</option>
+                        <option value="2028">2028</option>
+                    </select>
+                    </div>
+                    <button class="btn-primary" onclick="nextStep(3)">Next →</button>
+                </div>
+
+                <div id="step-3" class="hidden">
+    <div class="input-group">
+        <label class="input-label">Past Paper Range - Start Year</label>
+        <select id="input-start-year" class="input-field">
+            <option value="">Select start year</option>
+            <option value="2000">2000</option>
+            <option value="2001">2001</option>
+            <option value="2002">2002</option>
+            <option value="2003">2003</option>
+            <option value="2004">2004</option>
+            <option value="2005">2005</option>
+            <option value="2006">2006</option>
+            <option value="2007">2007</option>
+            <option value="2008">2008</option>
+            <option value="2009">2009</option>
+            <option value="2010">2010</option>
+            <option value="2011">2011</option>
+            <option value="2012">2012</option>
+            <option value="2013">2013</option>
+            <option value="2014">2014</option>
+            <option value="2015">2015</option>
+            <option value="2016">2016</option>
+            <option value="2017">2017</option>
+            <option value="2018">2018</option>
+            <option value="2019">2019</option>
+        </select>
+    </div>
+    <button class="btn-primary" onclick="nextStep(4)">Next →</button>
+</div>
+
+                <div id="step-4" class="hidden">
+    <div class="input-group">
+        <label class="input-label">Past Paper Range - End Year</label>
+        <select id="input-end-year" class="input-field">
+            <option value="">Select end year</option>
+            <option value="2020">2020</option>
+            <option value="2021">2021</option>
+            <option value="2022">2022</option>
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+        </select>
+    </div>
+    <button class="btn-primary" onclick="nextStep(5)">Next →</button>
+</div>
+
+                <div id="step-5" class="hidden">
+                    <div class="input-group">
+                        <label class="input-label">When's your deadline?</label>
+                        <input type="date" id="input-deadline" class="input-field">
+                    </div>
+                    <div class="input-group">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                            <input type="checkbox" id="consent-checkbox" style="width: auto;">
+                            <span style="font-size: 0.875rem; color: #6b7280;">I agree to share my progress data with the developer for improvement purposes</span>
+                        </label>
+                    </div>
+                    <button class="btn-primary" onclick="startApp()">Start Tracking! 🚀</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="main-app" class="main-app hidden">
+        <div class="app-header">
+            <div class="creator-badge">
+                <img src="creator-photo.jpg" alt="AM.AQEED" class="creator-photo">
+                <div class="creator-info">
+                    <div class="creator-label">Created by</div>
+                    <div class="creator-name">AM.AQEED</div>
+                </div>
+            </div>
+            <div class="user-info">
+                <div class="user-name">👋 Hi, <span id="display-name"></span>!</div>
+                <div class="user-batch">A/L Batch: <span id="display-batch"></span></div>
+            </div>
+        </div>
+
+        <!-- Motivational Quote -->
+        <div class="quote-card">
+            <div class="quote-text" id="quote-text"></div>
+            <div class="quote-author" id="quote-author"></div>
+        </div>
+
+        <!-- Countdown Section -->
+        <div class="countdown-section">
+            <div class="countdown-header">
+                📅 Time Remaining Until Deadline
+            </div>
+            <div class="countdown-clock">
+                <div class="countdown-item">
+                    <div class="countdown-number" id="countdown-days">0</div>
+                    <div class="countdown-label">Days</div>
+                </div>
+                <div class="countdown-separator">:</div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="countdown-hours">00</div>
+                    <div class="countdown-label">Hours</div>
+                </div>
+                <div class="countdown-separator">:</div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="countdown-minutes">00</div>
+                    <div class="countdown-label">Minutes</div>
+                </div>
+                <div class="countdown-separator">:</div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="countdown-seconds">00</div>
+                    <div class="countdown-label">Seconds</div>
+                </div>
+            </div>
+            
+            <div class="stats-bar">
+                <div class="stat-box">
+                    <div class="stat-value" id="sections-left">0</div>
+                    <div class="stat-label">sections remaining</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="daily-rate">0</div>
+                    <div class="stat-label">per day needed</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Overall Progress -->
+        <div class="progress-card">
+            <div class="progress-header">
+                <h2>Overall Progress</h2>
+                <div class="progress-stats">
+                    <span class="progress-percent" id="overall-progress">0%</span>
+                    <span class="progress-count">
+                        <span id="completed-sections">0</span> / <span id="total-sections">0</span> sections
+                    </span>
+                </div>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="overall-bar"></div>
+            </div>
+        </div>
+
+        <!-- Past Papers Cards -->
+        <div class="progress-card">
+            <h2 class="table-title">Past Papers Progress</h2>
+            <div id="paper-container" class="paper-container">
+                <!-- Cards will be generated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Feedback Section -->
+        <div class="feedback-section">
+            <h2 class="feedback-title">📝 Send Feedback</h2>
+            <p style="color: #6b7280; margin-bottom: 1rem;">Have suggestions or found a bug? Let me know!</p>
+            <div class="feedback-form">
+                <input type="text" id="feedback-input" class="feedback-input" placeholder="Type your feedback here...">
+                <button class="btn-feedback" onclick="sendFeedback()">Send</button>
+            </div>
+            <div id="feedback-success" class="feedback-success"></div>
+        </div>
+
+        <!-- Reset Button -->
+        <div style="text-align: center; margin-top: 2rem;">
+            <button class="btn-reset" onclick="resetApp()">🔄 Reset All Data</button>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <!-- ADD THIS LINE -->
+    <script src="script.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js');
+}
+</script>
+</body>
+</html>
